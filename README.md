@@ -15,7 +15,7 @@ Knowledge and understanding of the [Component Framework](http://github.com/compo
 4. Install your remote components by going to the 'app' directory in a terminal and run 'component install -f'.
 5. You are ready to go!
 
-### Using a component in Alloy
+### Using a Component in Alloy
 
 In any Alloy js file you can access a component with the following:
 
@@ -24,7 +24,7 @@ In any Alloy js file you can access a component with the following:
 
 ### Alloy Widgets as Components
 
-With Component it's very easy to distribute your reusable Alloy Widget.  As with normal Components, just create a repo on Github for your Widget.  In addition to your normal widget files, add a 'component.json' to your repo in the same directory as your 'widget.json'.
+With Component it's very easy to distribute your reusable Alloy Widget.  As with normal Components, just create a repo on Github for your Widget.  In addition to your normal Widget files, add a 'component.json' to your repo in the same directory as your 'widget.json'.
 
 Here is an example of a Widget's 'component.json' file:
 
