@@ -8,7 +8,7 @@ exports.init = function (logger, config, cli, appc) {
         var appDir = build.projectDir + '/app';
         logger.info("Running component-alloy plugin...");
 
-        exec('cd "' + appDir + '" && ulimit -n 10000 && component build -v -c -o lib -n component', function (error, stdout, stderr) {
+        exec('cd "' + appDir + '" && ulimit -n 10000 && component build -v -c -o widgets -n component', function (error, stdout, stderr) {
             logger.info(stdout);
             if (stderr.length) {
                 logger.error(stderr);
@@ -19,18 +19,20 @@ exports.init = function (logger, config, cli, appc) {
                 return process.exit(1);
             }
             var fs = require('fs');
-            return fs.appendFile(appDir+'/lib/component.js', '\nmodule.exports = require;', function(err) {
-                if (err) {
-                    logger.error(error);
-	                return process.exit(1);
-                }
-                var component = require(appDir+'/lib/component');
-                var code = "";
-                for (var key in component.aliases) {
-                    var path = component.aliases[key];
-                    code += '\nrequire.alias("'+path+'","'+(key.split('deps/')[1])+'");';
-                }
-                return fs.appendFile(appDir+'/lib/component.js', code, finished);
+            return fs.rename(appDir+'/widgets/component.js', appDir+'/lib/component.js', function(err) {
+                return fs.appendFile(appDir+'/lib/component.js', '\nmodule.exports = require;', function(err) {
+                    if (err) {
+                        logger.error(error);
+                        return process.exit(1);
+                    }
+                    var component = require(appDir+'/lib/component');
+                    var code = "";
+                    for (var key in component.aliases) {
+                        var path = component.aliases[key];
+                        code += '\nrequire.alias("'+path+'","'+(key.split('deps/')[1])+'");';
+                    }
+                    return fs.appendFile(appDir+'/lib/component.js', code, finished);
+                });
             });
         });
     });
