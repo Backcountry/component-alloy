@@ -20,9 +20,13 @@ exports.init = function (logger, config, cli, appc) {
             }
             var fs = require('fs');
             return fs.rename(appDir+'/widgets/component.js', appDir+'/lib/component.js', function(err) {
+                if (err) {
+                    logger.info('errror='+JSON.stringify(err));
+                    return process.exit(1);
+                }
                 return fs.appendFile(appDir+'/lib/component.js', '\nmodule.exports = require;', function(err) {
                     if (err) {
-                        logger.error(error);
+                        logger.info('errror='+JSON.stringify(err));
                         return process.exit(1);
                     }
                     var component = require(appDir+'/lib/component');
